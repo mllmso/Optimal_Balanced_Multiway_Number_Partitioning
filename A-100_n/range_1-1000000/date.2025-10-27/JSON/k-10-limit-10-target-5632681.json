@@ -1,0 +1,178 @@
+{
+    "author": {
+        "id": "mllmso",
+        "location": "France",
+        "links": {
+            "repository": "https://github.com/mllmso"
+        }
+    },
+    "project": {
+        "name": "Optimal Balanced Multiway Number Partitioning at Scale",
+        "link": "https://github.com/mllmso/Optimal_Balanced_Multiway_Number_Partitioning",
+        "objective": "Partition a multiset of N positive integers into K subsets with sizes and sums as equal as possible.",
+        "complexity": "NP-hard"
+    },
+    "file": {
+        "name": "k-10-limit-10-target-5632681.json",
+        "directory": "Optimal_Balanced_Multiway_Number_Partitioning/A-100_n/range_1-1000000/date.2025-10-27/JSON"
+    },
+    "multiset": {
+        "type": "true random numbers",
+        "source": {
+            "urls": {
+                "external": "https://www.random.org/integer-sets/?sets=1&num=100&min=1&max=1000000&seqnos=on&commas=on&sort=on&order=index&format=html&rnd=date.2025-10-27",
+                "internal": "./multiset.json"
+            },
+            "set": 1,
+            "size": 100,
+            "range": [
+                1,
+                1000000
+            ],
+            "sum": 56326803,
+            "generated": {
+                "at": "2025-10-27",
+                "by": "https://www.random.org/",
+                "credit": "Random.org - True Random Number Service",
+                "disclaimer": "The author (mllmso) is not affiliated with, sponsored by, or endorsed by RANDOM.ORG."
+            }
+        }
+    },
+    "constraints": {
+        "k": 10,
+        "limit": 10,
+        "target": 5632681,
+        "max_imbalance": {
+            "sum": 1,
+            "size": 0
+        }
+    },
+    "partition": {
+        "k": 10,
+        "optimal": true,
+        "status": "optimal",
+        "description": "All subset sums differ by at most 1 and sizes are equal.",
+        "subsets": [
+            [
+                23724,
+                35484,
+                363290,
+                547327,
+                676592,
+                733609,
+                788395,
+                818993,
+                819589,
+                825677
+            ],
+            [
+                32631,
+                41868,
+                334404,
+                459244,
+                505789,
+                582026,
+                865385,
+                911446,
+                943431,
+                956456
+            ],
+            [
+                45968,
+                303280,
+                423746,
+                436117,
+                449943,
+                514069,
+                832886,
+                836205,
+                890962,
+                899504
+            ],
+            [
+                68905,
+                101498,
+                216894,
+                234873,
+                462302,
+                651238,
+                964671,
+                973219,
+                975266,
+                983814
+            ],
+            [
+                274202,
+                386679,
+                455057,
+                501069,
+                544408,
+                593363,
+                614173,
+                638355,
+                784598,
+                840776
+            ],
+            [
+                43687,
+                209631,
+                233230,
+                305143,
+                589869,
+                597275,
+                743239,
+                950904,
+                974247,
+                985455
+            ],
+            [
+                224019,
+                249218,
+                364636,
+                426173,
+                484135,
+                557531,
+                732984,
+                774581,
+                831001,
+                988402
+            ],
+            [
+                147614,
+                224793,
+                263358,
+                333466,
+                443892,
+                714454,
+                744225,
+                867665,
+                935422,
+                957792
+            ],
+            [
+                131615,
+                247733,
+                361678,
+                408292,
+                570292,
+                667326,
+                733337,
+                763829,
+                795932,
+                952647
+            ],
+            [
+                14824,
+                142140,
+                388149,
+                473628,
+                530392,
+                632111,
+                705401,
+                828451,
+                920093,
+                997492
+            ]
+        ]
+    }
+}

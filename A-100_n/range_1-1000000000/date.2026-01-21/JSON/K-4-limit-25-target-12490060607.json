@@ -1,0 +1,63 @@
+{
+    "author": {
+        "id": "mllmso",
+        "location": "France",
+        "links": {
+            "repository": "https://github.com/mllmso"
+        }
+    },
+    "project": {
+        "name": "Optimal Balanced Multiway Number Partitioning at Scale",
+        "link": "https://github.com/mllmso/Optimal_Balanced_Multiway_Number_Partitioning",
+        "objective": "Partition a multiset of N positive integers into K subsets with sizes and sums as equal as possible.",
+        "complexity": "NP-hard"
+    },
+    "file": {
+        "name": "K-4-limit-25-target-12490060607.json",
+        "directory": "Optimal_Balanced_Multiway_Number_Partitioning/A-100_n/range_1-1000000000/date.2026-01-21/JSON"
+    },
+    "multiset": {
+        "type": "true random numbers",
+        "source": {
+            "urls": {
+                "external": "https://www.random.org/integer-sets/?sets=1&num=100&min=1&max=1000000000&seqnos=on&commas=on&sort=on&order=index&format=html&rnd=date.2026-01-21",
+                "internal": "./multiset.json"
+            },
+            "set": 1,
+            "size": 100,
+            "range": [
+                1,
+                1000000000
+            ],
+            "sum": 49960242428,
+            "generated": {
+                "at": "2026-01-21",
+                "by": "https://www.random.org/",
+                "credit": "Random.org - True Random Number Service",
+                "disclaimer": "The author (mllmso) is not affiliated with, sponsored by, or endorsed by RANDOM.ORG."
+            }
+        }
+    },
+    "constraints": {
+        "k": 4,
+        "limit": 25,
+        "target": 12490060607,
+        "max_imbalance": {
+            "sum": 0,
+            "size": 0
+        }
+    },
+    "partition": {
+        "k": 4,
+        "optimal": true,
+        "status": "optimal",
+        "description": "All subset sums and sizes are equal.",
+        "subsets": [
+[11595459,15327669,39908205,47838284,62191912,152641579,179197154,242789763,270404040,273090432,278974914,407827201,506291937,667279148,717193815,750135414,798913966,802782181,845572045,858594850,884433381,886109448,896973944,937447350,956546516],
+[25371634,38990036,73010435,91156476,97494609,110005708,188068911,256296227,359938045,387147645,423695345,447798662,560692722,580177783,609930881,662136048,709557353,742520179,797274247,816782889,855221461,877507856,895615238,925529021,958141196],
+[26376459,35006869,159136296,260809994,263487663,296321002,297618036,304120018,313551365,332871910,354318834,399535825,428081198,507839494,586854191,616443581,627398856,671109589,727059603,765872461,848433478,866632356,916350387,939200452,945630690],
+[49061914,51503486,102394115,145131476,198375800,227271714,255088440,271941298,318100454,350502529,358219945,406836212,447543179,545047560,586985487,645303128,681460932,736090575,791714925,806150921,849954179,874143627,891597541,924600357,975040813]
+       
+	   ]
+    }
+}

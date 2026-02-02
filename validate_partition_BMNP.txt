@@ -1,0 +1,187 @@
+# ============================================
+# Optimal Balanced Multiway Number Partitioning - Validator (Pseudo-code)
+# ============================================
+# Purpose:
+#   This algorithm validates candidate partitions of a multiset.
+#
+#   It ensures that:
+#     - All subset sums & sizes equal or differing by at most 1.
+#     - All elements from the multiset must be used without omission or duplication.
+#
+#   It includes a single configuration option: 
+#	  - show_path (toggle between filename or full path display).
+#	  
+#   In short, it checks whether a given partition is a valid "optimal balanced multiway number partitioning".
+#
+#---
+# Translation Guidance:
+#   This pseudo-code is language-neutral. You can use an AI assistant
+#   to translate it automatically into one of the target languages listed below.
+#
+#   The algorithm is portable because it only relies on:
+#     - basic loops and conditionals
+#     - dictionary/map counting
+#     - filesystem traversal
+#     - JSON parsing
+#
+#   Ease of Translation (from easiest to most complex, non-exhaustive list):
+#     1. Python    → very direct (dict, list, os.walk, json, collections.Counter)
+#     2. PHP       → concise, with built‑in functions (array_count_values, str_pad)
+#     3. JavaScript / Node.js → easy, JSON native and dynamic structures
+#     4. Java      → requires explicit types and libraries (HashMap, ArrayList, Jackson/Gson)
+#     5. C# (.NET) → similar to Java, with integrated JSON support
+#     6. C++       → most verbose; needs std::filesystem and external JSON library (nlohmann/json)
+#
+# 	Best AIs on their "first" run of this script:
+#     - ChatGPT 
+#     - Copilot
+# 	  - Perplexity 	
+#     - Gemini
+#
+#---
+# Installation: 
+#	- Place the translated script outside the "Optimal_Balanced_Multiway_Number_Partitioning" folder and run it.
+#
+#---
+# Expected output:
+#   - see validate_partition_BMNP-expected_output.html
+#
+#---
+# Credit:
+#   - Original source code authored by [mllmso].
+#   - Pseudo-code adaptation and documentation prepared with the assistance of Microsoft Copilot
+#     (AI companion by Microsoft; portability across Python, PHP, JavaScript/Node.js, Java, C#, C++ and more …).
+#
+# ============================================
+
+FUNCTION validate_partition(subsets, multiset_counts, min_sum, max_sum, min_size, max_size):
+    FOR i FROM 0 TO LENGTH(subsets) - 1:
+        subset := subsets[i]
+        sum  := 0
+        size := 0
+
+        FOR value IN subset:
+            IF NOT (value IN multiset_counts) OR multiset_counts[value] <= 0:
+                RETURN { status: false,
+                         error: "subsets[" + TO_STRING(i) + "]: value (" + TO_STRING(value) + ") not found in multiset" }
+            multiset_counts[value] := multiset_counts[value] - 1
+            sum  := sum + value
+            size := size + 1
+
+        IF sum < min_sum OR sum > max_sum:
+            RETURN { status: false,
+                     error: "subsets[" + TO_STRING(i) + "]: sum = " + TO_STRING(sum) +
+                            " out of bounds [min: " + TO_STRING(min_sum) + ", max: " + TO_STRING(max_sum) + "]" }
+
+        IF size < min_size OR size > max_size:
+            RETURN { status: false,
+                     error: "subsets[" + TO_STRING(i) + "]: size = " + TO_STRING(size) +
+                            " out of bounds [min: " + TO_STRING(min_size) + ", max: " + TO_STRING(max_size) + "]" }
+
+    FOR EACH count IN VALUES(multiset_counts):
+        IF count > 0:
+            RETURN { status: false, error: "multiset not fully used" }
+
+    RETURN { status: true, error: NULL }
+
+
+FUNCTION main():
+    directory := "Optimal_Balanced_Multiway_Number_Partitioning"
+    iterator  := RECURSIVE_DIR_ITERATOR(directory)
+
+    show_path := FALSE
+    extra_pad := IF show_path == TRUE THEN 51 ELSE 0
+
+    instances := 0
+    valid     := 0
+    output    := EMPTY_MAP()
+
+    # Optional init (not strictly needed, but harmless)
+    # depth_name        := NULL
+    # multiset_pathname := NULL
+
+    FOR file IN iterator:
+        IF file.is_directory AND file.depth == 0:
+            depth_name := file.name
+            output[depth_name] := { 'header': EMPTY_LIST(), 'files': EMPTY_MAP() }
+            APPEND(output[depth_name]['header'], depth_name + "\n\n")
+            APPEND(output[depth_name]['header'],
+                   PAD_RIGHT(IF show_path THEN "Path" ELSE "Filename", 51 + extra_pad) + "Optimal\n")
+            APPEND(output[depth_name]['header'], REPEAT_CHAR("-", 58 + extra_pad) + "\n")
+
+        IF file.is_directory AND file.depth <= 2:
+            multiset_pathname := NULL
+
+        IF file.is_file AND EXTENSION(file) == "json":
+            filename := file.name
+            IF LOWERCASE(filename) == "multiset.json":
+                CONTINUE
+
+            instances := instances + 1
+            subsets_pathname := file.path
+            subsets_data := PARSE_JSON(READ_TEXT_FILE(subsets_pathname))
+
+            IF show_path == TRUE:
+                display_name := PAD_RIGHT(REPLACE(subsets_pathname, directory + DIRECTORY_SEPARATOR, ""), 100)
+            ELSE:
+                display_name := PAD_RIGHT(REMOVE_SUFFIX(filename, ".json"), 50)
+
+            sort_key := REPLACE(subsets_pathname, "_", "")
+
+            IF subsets_data IS NULL OR
+               NOT HAS_KEY_PATH(subsets_data, ["partition","subsets"]) OR
+               NOT HAS_KEY_PATH(subsets_data, ["constraints","k"]):
+                output[depth_name]['files'][sort_key] := display_name + " Fail 🚫 subsets: JSON missing or invalid structure\n"
+                CONTINUE
+
+            subsets := subsets_data["partition"]["subsets"]
+            K       := subsets_data["constraints"]["k"]
+
+            IF multiset_pathname IS NULL:
+                multiset_pathname := DIRNAME(DIRNAME(subsets_pathname)) + DIRECTORY_SEPARATOR + "multiset.json"
+
+            multiset_data := PARSE_JSON(READ_TEXT_FILE(multiset_pathname))
+            IF multiset_data IS NULL OR NOT HAS_KEY(multiset_data, "numbers"):
+                output[depth_name]['files'][sort_key] := display_name + " Fail 🚫 multiset: JSON missing or invalid structure\n"
+                CONTINUE
+
+            multiset := multiset_data["numbers"]
+            multiset_counts := COUNT_VALUES(multiset)
+
+            sum_multiset  := SUM(multiset)
+            size_multiset := LENGTH(multiset)
+
+			min_sum  := TO_INT(FLOOR(sum_multiset / K))
+			max_sum  := TO_INT(CEIL(sum_multiset / K))
+			min_size := TO_INT(FLOOR(size_multiset / K))
+			max_size := TO_INT(CEIL(size_multiset / K))
+
+            result := validate_partition(subsets, multiset_counts, min_sum, max_sum, min_size, max_size)
+
+            IF result["status"] == TRUE:
+                valid := valid + 1
+                output[depth_name]['files'][sort_key] := display_name + " 100% 🟩\n"
+            ELSE:
+                output[depth_name]['files'][sort_key] := display_name + " Fail 🟥 " + result["error"] + "\n"
+
+    PRINT("<pre>\n")
+    PRINT("\n" + directory + " - Validation\n\n")
+    PRINT("Objective:\n")
+    PRINT("> All subset sums & sizes equal or differing by at most 1\n\n")
+    PRINT("Show_path = " + (IF show_path == TRUE THEN "True" ELSE "False") + "\n\n")
+
+    FOR EACH depth IN KEYS(output):
+        PRINT("\n")
+        PRINT(JOIN(output[depth]['header'], ""))
+        SORT_BY_KEY(output[depth]['files'], MODE := "NATURAL")
+        FOR EACH key IN KEYS(output[depth]['files']):
+            PRINT(output[depth]['files'][key])
+        PRINT("\n")
+
+    PRINT(REPEAT_CHAR("=", 58 + extra_pad) + "\n\n")
+    PRINT("Total: " + TO_STRING(valid) + " / " + TO_STRING(instances) + " valid instances\n")
+    PRINT("</pre>\n")
+
+
+# Entry point
+main()
