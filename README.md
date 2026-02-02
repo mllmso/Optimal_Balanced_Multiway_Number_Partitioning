@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/1148069278.svg)](https://doi.org/10.5281/zenodo.18461711)
+
 # Optimal Balanced Multiway Number Partitioning
 > 📌 ***Datasets → small to large (N) → uniform random values (10k–1B) → optimal partitions → K ≤ 10,000*** 🚀
 
@@ -83,3 +85,4 @@ The problem is **NP-hard**—no polynomial-time algorithm can solve all instance
 - ℹ️ **Attribution required** — credit the author  
 
 Review the ⚖️ [Full Legal Code](https://creativecommons.org/licenses/by/4.0/legalcode.en)
+
